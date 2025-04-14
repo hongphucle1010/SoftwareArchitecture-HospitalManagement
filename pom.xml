@@ -31,11 +31,11 @@
     <modules>
         <module>common</module>
         <module>discovery-server</module>
-        <module>appointment-service</module>
+<!--        <module>appointment-service</module>-->
         <module>authentication-service</module>
-        <module>billing-service</module>
-        <module>medical-record-service</module>
-        <module>notification-service</module>
+<!--        <module>billing-service</module>-->
+<!--        <module>medical-record-service</module>-->
+<!--        <module>notification-service</module>-->
         <module>patient-service</module>
         <module>staff-service</module>
         <module>testing-service</module>
