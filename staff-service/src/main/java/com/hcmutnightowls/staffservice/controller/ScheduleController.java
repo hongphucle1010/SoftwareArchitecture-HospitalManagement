@@ -1,6 +1,6 @@
 package com.hcmutnightowls.staffservice.controller;
 
-import com.hcmutnightowls.common.dto.ResponseObject;
+import com.hcmutnightowls.staffservice.dto.ResponseObject;
 import com.hcmutnightowls.staffservice.dto.ScheduleRequest;
 import com.hcmutnightowls.staffservice.model.Schedule;
 import com.hcmutnightowls.staffservice.model.ShiftType;

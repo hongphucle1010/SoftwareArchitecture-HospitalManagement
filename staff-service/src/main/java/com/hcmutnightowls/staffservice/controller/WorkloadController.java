@@ -1,6 +1,6 @@
 package com.hcmutnightowls.staffservice.controller;
 
-import com.hcmutnightowls.common.dto.ResponseObject;
+import com.hcmutnightowls.staffservice.dto.ResponseObject;
 import com.hcmutnightowls.staffservice.dto.WorkloadRequest;
 import com.hcmutnightowls.staffservice.model.Workload;
 import com.hcmutnightowls.staffservice.service.WorkloadService;
