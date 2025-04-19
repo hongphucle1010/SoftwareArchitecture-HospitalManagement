@@ -1,4 +1,4 @@
-package com.hcmutnightowls.common.dto;
+package com.hcmutnightowls.staffservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

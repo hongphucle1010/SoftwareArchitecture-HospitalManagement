@@ -1,6 +1,6 @@
 package com.hcmutnightowls.testingservice.controller;
 
-import com.hcmutnightowls.common.dto.ResponseObject;
+import com.hcmutnightowls.testingservice.dto.ResponseObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
