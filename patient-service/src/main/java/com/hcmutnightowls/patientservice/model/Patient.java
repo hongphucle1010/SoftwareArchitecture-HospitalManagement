@@ -37,5 +37,5 @@ public class Patient {
 
     private LocalDate registrationDate;
 
-    private boolean isActive = true;
+    private Boolean isActive = true;
 }

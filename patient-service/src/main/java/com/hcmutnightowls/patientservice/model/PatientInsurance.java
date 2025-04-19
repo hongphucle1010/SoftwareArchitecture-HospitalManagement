@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Insurance {
+public class PatientInsurance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +29,7 @@ public class Insurance {
 
     private LocalDate validUntil;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Patient patient;
+//    @ManyToOne
+//    @JoinColumn(name = "patient_id", referencedColumnName = "id", insertable = false, updatable = false)
+//    private Patient patient;
 }
