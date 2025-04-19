@@ -1,2 +1,18 @@
-package com.hcmutnightowls.patientservice.dto;public class ResponseObject {
+package com.hcmutnightowls.patientservice.dto;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ResponseObject<T> {
+    int status;
+    String message;
+    T data;
 }
+
