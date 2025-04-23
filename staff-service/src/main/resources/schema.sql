@@ -1,6 +1,6 @@
 -- Staff Service Database Schema
 CREATE TABLE IF NOT EXISTS staff (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     phone_number VARCHAR(20),
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS staff_specializations (
 );
 
 CREATE TABLE IF NOT EXISTS schedules (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     staff_id BIGINT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS schedules (
 );
 
 CREATE TABLE IF NOT EXISTS workloads (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     staff_id BIGINT NOT NULL,
     date DATE NOT NULL,
     patient_count INTEGER DEFAULT 0,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS workloads (
     procedure_count INTEGER DEFAULT 0,
     surgery_count INTEGER DEFAULT 0,
     consultation_count INTEGER DEFAULT 0,
-    hours_worked NUMERIC(5,2) DEFAULT 0.0,
+    hours_worked FLOAT DEFAULT 0.0,
     notes TEXT,
     FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
 );
