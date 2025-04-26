@@ -12,7 +12,6 @@ import java.util.Optional;
 public class PatientService {
     @Autowired
     private PatientRepo patientRepo;
-    @PreAuthorize("hasRole('ROLE_PATIENT')")
     public Optional<Patient> findBySubject(String subject) {
          return patientRepo.findBySubject(subject);
     }

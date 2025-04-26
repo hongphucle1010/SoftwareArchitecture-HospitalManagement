@@ -14,7 +14,6 @@ import java.util.Optional;
 public class StaffService {
     @Autowired
     private StaffRepo StaffRepo;
-    @PreAuthorize("hasRole('ROLE_STAFF')")
     public Optional<Staff> findBySubject(String subject) {
         return StaffRepo.findBySubject(subject);
     }

@@ -12,8 +12,7 @@ import java.util.Optional;
 public class AdminService {
     @Autowired
     private AdminRepo adminRepo;
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Optional<Admin> findBySubject(String phone) {
-        return adminRepo.findBySubject(phone);
+    public Optional<Admin> findBySubject(String Subject) {
+        return adminRepo.findBySubject(Subject);
     }
 }

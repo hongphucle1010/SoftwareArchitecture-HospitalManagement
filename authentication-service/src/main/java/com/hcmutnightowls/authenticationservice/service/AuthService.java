@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-    @Autowired
-    private AuthService authService;
 
     @Autowired
     private AdminService adminService;
@@ -26,17 +24,17 @@ public class AuthService {
     private JwtAuthen jwtAuthen;
 
     public String loginAdmin(request LoginRequest) {
-        Admin admin = adminService.findBySubject(LoginRequest.getPhone()).orElseThrow(() -> new RuntimeException("Admin not found"));
+        Admin admin = adminService.findBySubject(LoginRequest.getSubject()).orElseThrow(() -> new RuntimeException("Admin not found"));
         return jwtAuthen.authentication(LoginRequest.getPassword(), admin);
     }
 
     public String loginStaff(request loginRequest) {
-        Staff staff = staffService.findBySubject(loginRequest.getPhone()).orElseThrow(() -> new RuntimeException("Staff not found"));
+        Staff staff = staffService.findBySubject(loginRequest.getSubject()).orElseThrow(() -> new RuntimeException("Staff not found"));
         return jwtAuthen.authentication(loginRequest.getPassword(), staff);
     }
 
     public String loginPatient(request loginRequest) {
-        Patient patient = patientService.findBySubject(loginRequest.getPhone()).orElseThrow(() -> new RuntimeException("Patient not found"));
+        Patient patient = patientService.findBySubject(loginRequest.getSubject()).orElseThrow(() -> new RuntimeException("Patient not found"));
         return jwtAuthen.authentication(loginRequest.getPassword(), patient);
     }
 }

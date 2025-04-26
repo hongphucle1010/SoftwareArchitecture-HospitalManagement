@@ -18,7 +18,7 @@ public class AuthController {
 
 
 
-    @PostMapping("/admin")
+    @PostMapping("/admin/login")
     public APIRespond<String> login(@RequestBody request LoginRequest) {
         try{
             return APIRespond.<String>builder()
@@ -33,7 +33,7 @@ public class AuthController {
         }
 
     }
-    @PostMapping("/staff")
+    @PostMapping("/staff/login")
     public APIRespond<String> loginStaff(@RequestBody request LoginRequest) {
         try {
             return APIRespond.<String>builder()
@@ -47,7 +47,7 @@ public class AuthController {
                     .build();
         }
     }
-    @PostMapping("/patient")
+    @PostMapping("/patient/login")
     public APIRespond<String> loginPatient(@RequestBody request LoginRequest) {
         try {
             return APIRespond.<String>builder()
