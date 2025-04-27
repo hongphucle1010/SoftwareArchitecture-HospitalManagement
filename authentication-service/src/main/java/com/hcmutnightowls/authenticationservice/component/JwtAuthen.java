@@ -41,7 +41,7 @@ public class JwtAuthen {
                 .setId(id)
                 .setIssuedAt(now)
                 .setSubject(subject)
-                .claim("role", role)
+                .claim("scope", role)
                 .signWith(signingKey, signatureAlgorithm);
 
         // If it has been specified, let's add the expiration

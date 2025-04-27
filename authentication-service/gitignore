@@ -1,0 +1,6 @@
+/target
+/.idea
+*.iml
+
+# Ignore environment files
+src/main/resources/.env

@@ -2,12 +2,14 @@ package com.hcmutnightowls.authenticationservice.controller;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
 import com.hcmutnightowls.authenticationservice.dto.respond.APIRespond;
+import com.hcmutnightowls.authenticationservice.model.Admin;
+import com.hcmutnightowls.authenticationservice.model.User;
+import com.hcmutnightowls.authenticationservice.service.AdminService;
 import com.hcmutnightowls.authenticationservice.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private AdminService adminService;
 
 
 
