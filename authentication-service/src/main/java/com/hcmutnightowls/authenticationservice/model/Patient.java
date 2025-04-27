@@ -9,6 +9,6 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
-@SuperBuilder
+@Builder
 public class Patient extends User {
 }

@@ -6,7 +6,11 @@ import com.hcmutnightowls.authenticationservice.model.Admin;
 import com.hcmutnightowls.authenticationservice.model.User;
 import com.hcmutnightowls.authenticationservice.service.AdminService;
 import com.hcmutnightowls.authenticationservice.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,48 +26,66 @@ public class AuthController {
     private AdminService adminService;
 
 
-
+    @Operation(summary = "Login for admin")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @PostMapping("/admin/login")
-    public APIRespond<String> login(@RequestBody request LoginRequest) {
-        try{
-            return APIRespond.<String>builder()
+    public ResponseEntity<APIRespond<String>> login(@RequestBody request LoginRequest) {
+        try {
+            return ResponseEntity.ok(APIRespond.<String>builder()
                     .status(200)
                     .message(authService.loginAdmin(LoginRequest))
-                    .build();
+                    .build());
         } catch (Exception e) {
-            return APIRespond.<String>builder()
+            return ResponseEntity.status(401).body(
+                    APIRespond.<String>builder()
                     .status(401)
                     .message("An error occurred: " + e.getMessage())
-                    .build();
+                    .build());
         }
-
     }
+
+    @Operation(summary = "Login for staff")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @PostMapping("/staff/login")
-    public APIRespond<String> loginStaff(@RequestBody request LoginRequest) {
+    public ResponseEntity<APIRespond<String>> loginStaff(@RequestBody request LoginRequest) {
         try {
-            return APIRespond.<String>builder()
+            return ResponseEntity.ok(APIRespond.<String>builder()
                     .status(200)
                     .message(authService.loginStaff(LoginRequest))
-                    .build();
+                    .build());
         } catch (Exception e) {
-            return APIRespond.<String>builder()
+            return ResponseEntity.status(401).body(
+                    APIRespond.<String>builder()
                     .status(401)
                     .message("An error occurred: " + e.getMessage())
-                    .build();
+                    .build());
         }
     }
+
+    @Operation(summary = "Login for patient")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @PostMapping("/patient/login")
-    public APIRespond<String> loginPatient(@RequestBody request LoginRequest) {
+    public ResponseEntity<APIRespond<String>> loginPatient(@RequestBody request LoginRequest) {
         try {
-            return APIRespond.<String>builder()
+            return ResponseEntity.ok(APIRespond.<String>builder()
                     .status(200)
                     .message(authService.loginPatient(LoginRequest))
-                    .build();
+                    .build());
         } catch (Exception e) {
-            return APIRespond.<String>builder()
+            return ResponseEntity.status(401).body(
+                    APIRespond.<String>builder()
                     .status(401)
                     .message("An error occurred: " + e.getMessage())
-                    .build();
+                    .build());
         }
     }
 
