@@ -2,7 +2,7 @@ package com.hcmutnightowls.authenticationservice.controller;
 
 import com.hcmutnightowls.authenticationservice.dto.respond.APIRespond;
 import com.hcmutnightowls.authenticationservice.model.Admin;
-import com.hcmutnightowls.authenticationservice.service.AdminService;
+import com.hcmutnightowls.authenticationservice.service.Admin.AdminService;
 import com.hcmutnightowls.authenticationservice.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

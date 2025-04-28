@@ -2,9 +2,7 @@ package com.hcmutnightowls.authenticationservice.controller;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
 import com.hcmutnightowls.authenticationservice.dto.respond.APIRespond;
-import com.hcmutnightowls.authenticationservice.model.Admin;
-import com.hcmutnightowls.authenticationservice.model.User;
-import com.hcmutnightowls.authenticationservice.service.AdminService;
+import com.hcmutnightowls.authenticationservice.service.Admin.AdminService;
 import com.hcmutnightowls.authenticationservice.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,8 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -36,7 +32,7 @@ public class AuthController {
         try {
             return ResponseEntity.ok(APIRespond.<String>builder()
                     .status(200)
-                    .message(authService.loginAdmin(LoginRequest))
+                    .message(authService.login("admin_login", LoginRequest))
                     .build());
         } catch (Exception e) {
             return ResponseEntity.status(401).body(
@@ -57,7 +53,7 @@ public class AuthController {
         try {
             return ResponseEntity.ok(APIRespond.<String>builder()
                     .status(200)
-                    .message(authService.loginStaff(LoginRequest))
+                    .message(authService.login("staff_login", LoginRequest))
                     .build());
         } catch (Exception e) {
             return ResponseEntity.status(401).body(
@@ -78,7 +74,7 @@ public class AuthController {
         try {
             return ResponseEntity.ok(APIRespond.<String>builder()
                     .status(200)
-                    .message(authService.loginPatient(LoginRequest))
+                    .message(authService.login("patient_login", LoginRequest))
                     .build());
         } catch (Exception e) {
             return ResponseEntity.status(401).body(

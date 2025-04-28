@@ -1,6 +1,7 @@
 package com.hcmutnightowls.authenticationservice.component;
 
 import com.hcmutnightowls.authenticationservice.model.User;
+import com.hcmutnightowls.authenticationservice.service.Interface.JWT.IJWTCreateToken;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,12 +17,13 @@ import java.util.Date;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JwtAuthen {
+public class JWTCreateToken implements IJWTCreateToken {
     @Value("${jwt.secret_key}")
     String secret;
     @Value("${jwt.expirationtime}")
     long expiration;
 
+    @Override
     public String createJWT(String id, String subject, String role, long ttlMillis) {
         // The JWT signature algorithm we will be using to sign the token
         // this is header
@@ -53,14 +55,5 @@ public class JwtAuthen {
 
         // Builds the JWT and serializes it to a compact, URL-safe string
         return builder.compact();
-    }
-    public String authentication(String userPassword, User user) {
-        if (BCrypt.checkpw(userPassword, user.getPassword())) {
-            // Password matches, return a success message or token
-            return createJWT(String.valueOf(user.getId()), user.getSubject(), user.getRole(), expiration);
-        } else {
-            // Password does not match, throw an exception or return an error message
-            throw new RuntimeException("Invalid password");
-        }
     }
 }

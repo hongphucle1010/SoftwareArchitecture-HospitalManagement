@@ -1,22 +1,16 @@
 package com.hcmutnightowls.authenticationservice.utils;
 
 import com.hcmutnightowls.authenticationservice.component.JwtAuthen;
-import com.hcmutnightowls.authenticationservice.config.TestConfig;
 import com.hcmutnightowls.authenticationservice.model.Staff;
 import com.hcmutnightowls.authenticationservice.repository.StaffRepo;
 import com.hcmutnightowls.authenticationservice.service.AuthService;
-import com.hcmutnightowls.authenticationservice.service.StaffService;
+import com.hcmutnightowls.authenticationservice.service.Staff.StaffService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
 //import java.util.Optional;
 
