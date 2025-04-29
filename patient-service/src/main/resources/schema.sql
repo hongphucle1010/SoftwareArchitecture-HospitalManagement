@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS medical_histories (
     visit_date DATE NOT NULL,
     doctor_id BIGINT,
     notes TEXT,
-    FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE,
+    FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS patient_insurance (
