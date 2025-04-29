@@ -12,9 +12,9 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String subject;
-    private String role;
-    private String password;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
+    public String subject;
+    public String role;
+    public String password;
 }
