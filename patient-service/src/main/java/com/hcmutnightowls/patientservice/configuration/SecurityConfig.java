@@ -25,9 +25,9 @@ public class SecurityConfig {
             "/api/auth/staff/login",
             "/api/auth/patient/login",
             "/api/auth/admin/login",
-            "/api/auth/patient/register",
-            "/api/auth/staff/register",
-            "/api/auth/admin/register",
+            "/api/patient",
+            "/api/staff",
+            "/api/admin",
             "/",
             "/swagger-ui/**",
             "/v3/api-docs/**"

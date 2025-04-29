@@ -22,11 +22,11 @@ public class PatientService implements IPatientService {
          return patientRepo.findBySubject(subject);
     }
     @Override
-    public Patient postPatient(request req) {
+    public void postPatient(request req) {
         Patient patient = new Patient();
         patient.setSubject(req.getSubject());
         patient.setPassword(passwordEncoder.encode(req.getPassword()));
         patient.setRole("PATIENT");
-        return patientRepo.save(patient);
+        patientRepo.save(patient);
     }
 }
