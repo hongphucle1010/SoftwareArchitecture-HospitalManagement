@@ -1,7 +1,9 @@
 package com.hcmutnightowls.patientservice.controller;
 
 
+import com.hcmutnightowls.patientservice.dto.AuthenDTO;
 import com.hcmutnightowls.patientservice.dto.PatientDTO;
+import com.hcmutnightowls.patientservice.dto.RegisterDTO;
 import com.hcmutnightowls.patientservice.dto.ResponseObject;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
@@ -23,7 +25,6 @@ import java.util.Map;
 public class PatientController {
     private final PatientService patientService;
     private final PatientQueryService patientQueryService;
-
 //    @GetMapping
 //    @ResponseStatus(HttpStatus.OK)
 //    public ResponseObject<String> test() {
@@ -34,11 +35,29 @@ public class PatientController {
 //                .data("Hello world")
 //                .build();
 //    }
-
+//id, fullName, email, phoneNumber, address, dateOfBirth, gender, nationalId, bloodType, registrationDate, isActive;
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseObject<PatientDTO> registerPatient(@Valid @RequestBody PatientDTO patientDTO) {
+    public ResponseObject<PatientDTO> registerPatient(@Valid @RequestBody RegisterDTO registerDTO) {
+        PatientDTO patientDTO = PatientDTO.builder()
+                .fullName(registerDTO.getFullName())
+                .email(registerDTO.getEmail())
+                .phoneNumber(registerDTO.getPhoneNumber())
+                .address(registerDTO.getAddress())
+                .dateOfBirth(registerDTO.getDateOfBirth())
+                .gender(registerDTO.getGender())
+                .nationalId(registerDTO.getNationalId())
+                .bloodType(registerDTO.getBloodType())
+                .registrationDate(registerDTO.getRegistrationDate())
+                .isActive(registerDTO.isActive()).build();
+
         PatientDTO result = patientService.registerPatient(patientDTO);
+
+        AuthenDTO authenDTO = AuthenDTO.builder()
+                .id(result.getId())
+                .username(registerDTO.getUsername())
+                .password(registerDTO.getPassword()).build();
+
         return ResponseObject.<PatientDTO>builder()
                 .status(HttpStatus.CREATED.value())
                 .message("Patient registered successfully")
