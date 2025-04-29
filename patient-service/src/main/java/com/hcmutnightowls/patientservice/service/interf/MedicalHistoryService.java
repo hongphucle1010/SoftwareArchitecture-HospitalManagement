@@ -1,6 +1,9 @@
 package com.hcmutnightowls.patientservice.service.interf;
 
-import com.hcmutnightowls.patientservice.dto.MedicalHistoryDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.MedicalHistoryDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.CreateMedicalHistoryDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.MedicalHistoryResponseDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.UpdateMedicalHistoryDTO;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.MedicalHistoryNotFoundException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
@@ -8,13 +11,13 @@ import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
 import java.util.List;
 
 public interface MedicalHistoryService {
-    MedicalHistoryDTO addMedicalHistory(Long patientId, MedicalHistoryDTO medicalHistoryDTO)
+    MedicalHistoryResponseDTO addMedicalHistory(Long patientId, CreateMedicalHistoryDTO createMedicalHistoryDTO)
             throws PatientNotFoundException, InvalidDataException;
-    MedicalHistoryDTO updateMedicalHistory(Long patientId, Long historyId, MedicalHistoryDTO medicalHistoryDTO)
+    MedicalHistoryResponseDTO updateMedicalHistory(Long patientId, Long historyId, UpdateMedicalHistoryDTO updateMedicalHistoryDTO)
             throws PatientNotFoundException, MedicalHistoryNotFoundException, InvalidDataException;
-    List<MedicalHistoryDTO> getMedicalHistories(Long patientId, String startDate, String endDate)
+    List<MedicalHistoryResponseDTO> getMedicalHistories(Long patientId, String startDate, String endDate)
             throws PatientNotFoundException;
-    MedicalHistoryDTO getMedicalHistoryById(Long patientId, Long historyId)
+    MedicalHistoryResponseDTO getMedicalHistoryById(Long patientId, Long historyId)
             throws PatientNotFoundException, MedicalHistoryNotFoundException;
     void deleteMedicalHistory(Long patientId, Long historyId)
             throws PatientNotFoundException, MedicalHistoryNotFoundException;
