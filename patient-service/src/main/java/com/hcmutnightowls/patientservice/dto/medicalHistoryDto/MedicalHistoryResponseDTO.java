@@ -1,4 +1,4 @@
-package com.hcmutnightowls.patientservice.dto;
+package com.hcmutnightowls.patientservice.dto.medicalHistoryDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicalHistoryDTO {
+public class MedicalHistoryResponseDTO {
     private Long id;
     private Long patientId;
     private String diagnosis;
@@ -19,4 +19,4 @@ public class MedicalHistoryDTO {
     private String visitDate;
     private Long doctorId;
     private String notes;
-}
+} 
