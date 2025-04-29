@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface StaffRepo extends JpaRepository<Staff, Integer> {
+public interface StaffRepo extends JpaRepository<Staff, Long> {
     Optional<Staff> findBySubject(String subject);
 }

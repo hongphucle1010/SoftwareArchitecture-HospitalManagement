@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String subject;
     private String role;
     private String password;
