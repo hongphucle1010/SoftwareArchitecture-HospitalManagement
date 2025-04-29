@@ -1,4 +1,4 @@
-package com.hcmutnightowls.staffservice.config;
+package com.hcmutnightowls.patientservice.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
