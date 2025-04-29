@@ -7,6 +7,7 @@ import com.hcmutnightowls.staffservice.model.StaffType;
 import com.hcmutnightowls.staffservice.service.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class StaffController {
     
     private final StaffService staffService;
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseObject<Staff> createStaff(@RequestBody StaffRequest staffRequest) {
@@ -27,7 +28,7 @@ public class StaffController {
                 .data(staffService.createStaff(staffRequest))
                 .build();
     }
-    
+    @PreAuthorize("hasRole('STAFF')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<Staff> updateStaff(@PathVariable Long id, @RequestBody StaffRequest staffRequest) {
@@ -37,7 +38,7 @@ public class StaffController {
                 .data(staffService.updateStaff(id, staffRequest))
                 .build();
     }
-    
+    @PreAuthorize("hasRole('STAFF')")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<Staff> getStaffById(@PathVariable Long id) {
@@ -47,7 +48,7 @@ public class StaffController {
                 .data(staffService.getStaffById(id))
                 .build();
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Staff>> getAllStaff() {
@@ -87,7 +88,7 @@ public class StaffController {
                 .data(staffService.getStaffBySpecialization(specialization))
                 .build();
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/active")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Staff>> getActiveStaff() {
