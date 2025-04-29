@@ -15,7 +15,8 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(List.of("https://co3017-fe.vercel.app/"));
+        corsConfiguration.setAllowedOriginPatterns(List.of("*")); // <-- using setAllowedOriginPatterns instead of setAllowedOrigins// <-- using setAllowedOriginPatterns instead of setAllowedOrigins
+
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
 
@@ -24,4 +25,5 @@ public class CorsConfig {
 
         return source;
     }
+
 }
