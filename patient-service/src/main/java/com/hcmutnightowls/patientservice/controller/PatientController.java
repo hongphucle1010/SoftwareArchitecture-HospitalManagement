@@ -7,6 +7,7 @@ import com.hcmutnightowls.patientservice.dto.RegisterDTO;
 import com.hcmutnightowls.patientservice.dto.ResponseObject;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
+import com.hcmutnightowls.patientservice.service.interf.AuthServiceClient;
 import com.hcmutnightowls.patientservice.service.interf.PatientQueryService;
 import com.hcmutnightowls.patientservice.service.interf.PatientService;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class PatientController {
     private final PatientService patientService;
     private final PatientQueryService patientQueryService;
+    private final AuthServiceClient authServiceClient;
 //    @GetMapping
 //    @ResponseStatus(HttpStatus.OK)
 //    public ResponseObject<String> test() {
@@ -35,7 +37,7 @@ public class PatientController {
 //                .data("Hello world")
 //                .build();
 //    }
-//id, fullName, email, phoneNumber, address, dateOfBirth, gender, nationalId, bloodType, registrationDate, isActive;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseObject<PatientDTO> registerPatient(@Valid @RequestBody RegisterDTO registerDTO) {
@@ -54,9 +56,10 @@ public class PatientController {
         PatientDTO result = patientService.registerPatient(patientDTO);
 
         AuthenDTO authenDTO = AuthenDTO.builder()
-                .id(result.getId())
-                .username(registerDTO.getUsername())
+                .subject(registerDTO.getSubject())
                 .password(registerDTO.getPassword()).build();
+
+        authServiceClient.postPatient(authenDTO);
 
         return ResponseObject.<PatientDTO>builder()
                 .status(HttpStatus.CREATED.value())
