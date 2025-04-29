@@ -18,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/patient")
 public class PatientController {
@@ -32,9 +35,9 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<APIRespond<Patient>> postPatient(@RequestBody request req) {
         try {
+            iPatientService.postPatient(req);
             return ResponseEntity.ok(APIRespond.<Patient>builder()
                     .status(200)
-                    .data(iPatientService.postPatient(req))
                     .message("success")
                     .build());
         } catch (Exception e) {

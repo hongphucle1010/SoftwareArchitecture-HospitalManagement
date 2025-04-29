@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface IPatientService {
     public Optional<Patient> findBySubject(String Subject);
-    public Patient postPatient(request req);
+    public void postPatient(request req);
 }
