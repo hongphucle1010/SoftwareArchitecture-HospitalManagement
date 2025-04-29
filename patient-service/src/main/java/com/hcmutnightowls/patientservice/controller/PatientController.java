@@ -10,6 +10,7 @@ import com.hcmutnightowls.patientservice.service.interf.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,6 +70,7 @@ public class PatientController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}/deactivate")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<Void> deactivatePatient(@PathVariable Long id) {
@@ -79,6 +81,7 @@ public class PatientController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}/reactivate")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<PatientDTO> reactivatePatient(@PathVariable Long id) {
@@ -101,6 +104,7 @@ public class PatientController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<PatientDTO>> getAllPatients(
@@ -115,6 +119,7 @@ public class PatientController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/national-id/{nationalId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<PatientDTO> getPatientByNationalId(@PathVariable String nationalId) {
@@ -126,6 +131,7 @@ public class PatientController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/active")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<PatientDTO>> getActivePatients(
