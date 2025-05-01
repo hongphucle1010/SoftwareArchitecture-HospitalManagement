@@ -7,6 +7,7 @@ import com.hcmutnightowls.staffservice.service.WorkloadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class WorkloadController {
 
     private final WorkloadService workloadService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseObject<Workload> recordWorkload(@RequestBody WorkloadRequest workloadRequest) {
@@ -28,7 +30,7 @@ public class WorkloadController {
                 .data(workloadService.recordWorkload(workloadRequest))
                 .build();
     }
-
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<Workload> updateWorkload(@PathVariable Long id, @RequestBody WorkloadRequest workloadRequest) {
@@ -39,6 +41,7 @@ public class WorkloadController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<Workload> getWorkloadById(@PathVariable Long id) {
@@ -49,6 +52,7 @@ public class WorkloadController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Workload>> getAllWorkloads() {
@@ -59,6 +63,7 @@ public class WorkloadController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/staff/{staffId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Workload>> getWorkloadsByStaffId(@PathVariable Long staffId) {
@@ -69,6 +74,7 @@ public class WorkloadController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/staff/{staffId}/date-range")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Workload>> getWorkloadsByStaffIdAndDateRange(
@@ -82,6 +88,7 @@ public class WorkloadController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/date-range")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Workload>> getWorkloadsByDateRange(
@@ -94,6 +101,7 @@ public class WorkloadController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/date/{date}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Workload>> getWorkloadsByDate(
@@ -105,6 +113,7 @@ public class WorkloadController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<String> deleteWorkload(@PathVariable Long id) {

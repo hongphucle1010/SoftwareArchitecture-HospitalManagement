@@ -27,9 +27,10 @@ public class StaffController {
     @PostMapping
     public Void postStaff(@RequestBody requestRegister req) {
         try {
+            istaffService.postStaff(req);
             ResponseEntity.ok(APIResponse.<Staff>builder()
                     .status(200)
-                    .data(istaffService.postStaff(req))
+                    .data(null)
                     .message("success")
                     .build());
         } catch (Exception e) {
