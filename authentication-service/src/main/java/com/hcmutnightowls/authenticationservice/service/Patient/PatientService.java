@@ -1,6 +1,7 @@
 package com.hcmutnightowls.authenticationservice.service.Patient;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
+import com.hcmutnightowls.authenticationservice.dto.request.requestRegister;
 import com.hcmutnightowls.authenticationservice.model.Patient;
 import com.hcmutnightowls.authenticationservice.repository.PatientRepo;
 import com.hcmutnightowls.authenticationservice.service.Interface.Patient.IPatientService;
@@ -22,8 +23,9 @@ public class PatientService implements IPatientService {
          return patientRepo.findBySubject(subject);
     }
     @Override
-    public Patient postPatient(request req) {
+    public Patient postPatient(requestRegister req) {
         Patient patient = new Patient();
+        patient.setId(req.getId());
         patient.setSubject(req.getSubject());
         patient.setPassword(passwordEncoder.encode(req.getPassword()));
         patient.setRole("PATIENT");

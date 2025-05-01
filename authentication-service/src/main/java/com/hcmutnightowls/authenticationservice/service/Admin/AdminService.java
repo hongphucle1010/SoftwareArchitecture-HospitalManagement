@@ -1,6 +1,7 @@
 package com.hcmutnightowls.authenticationservice.service.Admin;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
+import com.hcmutnightowls.authenticationservice.dto.request.requestRegister;
 import com.hcmutnightowls.authenticationservice.model.Admin;
 import com.hcmutnightowls.authenticationservice.repository.AdminRepo;
 import com.hcmutnightowls.authenticationservice.service.Interface.Admin.IAdminService;
@@ -28,8 +29,9 @@ public class AdminService implements IAdminService {
         return adminRepo.findBySubject(Subject);
     }
     @Override
-    public Admin postAdmin(request Req) {
+    public Admin postAdmin(requestRegister Req) {
         Admin admin = new Admin();
+        admin.setId(Req.getId());
         admin.setSubject(Req.getSubject());
         admin.setPassword(passwordEncoder.encode(Req.getPassword()));
         admin.setRole("ADMIN");
