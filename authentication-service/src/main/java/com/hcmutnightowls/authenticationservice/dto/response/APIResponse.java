@@ -1,4 +1,4 @@
-package com.hcmutnightowls.authenticationservice.dto.respond;
+package com.hcmutnightowls.authenticationservice.dto.response;
 
 
 import lombok.*;
@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class APIRespond<T> {
+public class APIResponse<T> {
     private int status;
     private String message;
     private T data;
