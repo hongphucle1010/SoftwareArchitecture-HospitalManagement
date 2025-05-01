@@ -2,7 +2,7 @@ package com.hcmutnightowls.authenticationservice.controller;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
 import com.hcmutnightowls.authenticationservice.dto.request.requestRegister;
-import com.hcmutnightowls.authenticationservice.dto.respond.APIRespond;
+import com.hcmutnightowls.authenticationservice.dto.response.APIResponse;
 import com.hcmutnightowls.authenticationservice.model.Admin;
 import com.hcmutnightowls.authenticationservice.service.Interface.Admin.IAdminService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,14 +54,14 @@ public class AdminController {
     @PostMapping
     public Void postAdmin(@RequestBody requestRegister req) {
         try {
-             ResponseEntity.ok(APIRespond.<Admin>builder()
+             ResponseEntity.ok(APIResponse.<Admin>builder()
                     .status(200)
                     .data(iadminService.postAdmin(req))
                     .message("success")
                     .build());
         } catch (Exception e) {
              ResponseEntity.status(401).body(
-                    APIRespond.<Admin>builder()
+                    APIResponse.<Admin>builder()
                     .status(401)
                     .message("An error occurred: " + e.getMessage())
                     .build());

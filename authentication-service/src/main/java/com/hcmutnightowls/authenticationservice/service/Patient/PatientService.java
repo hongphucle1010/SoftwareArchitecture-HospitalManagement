@@ -23,7 +23,7 @@ public class PatientService implements IPatientService {
          return patientRepo.findBySubject(subject);
     }
     @Override
-    public Patient postPatient(requestRegister req) {
+    public void postPatient(requestRegister req) {
         Patient patient = new Patient();
         patient.setId(req.getId());
         patient.setSubject(req.getSubject());
