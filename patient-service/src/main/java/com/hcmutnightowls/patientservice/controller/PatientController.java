@@ -1,10 +1,13 @@
 package com.hcmutnightowls.patientservice.controller;
 
 
+import com.hcmutnightowls.patientservice.dto.AuthenDTO;
 import com.hcmutnightowls.patientservice.dto.PatientDTO;
+import com.hcmutnightowls.patientservice.dto.RegisterDTO;
 import com.hcmutnightowls.patientservice.dto.ResponseObject;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
+import com.hcmutnightowls.patientservice.service.interf.AuthServiceClient;
 import com.hcmutnightowls.patientservice.service.interf.PatientQueryService;
 import com.hcmutnightowls.patientservice.service.interf.PatientService;
 import jakarta.validation.Valid;
@@ -23,7 +26,7 @@ import java.util.Map;
 public class PatientController {
     private final PatientService patientService;
     private final PatientQueryService patientQueryService;
-
+    private final AuthServiceClient authServiceClient;
 //    @GetMapping
 //    @ResponseStatus(HttpStatus.OK)
 //    public ResponseObject<String> test() {
@@ -37,8 +40,27 @@ public class PatientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseObject<PatientDTO> registerPatient(@Valid @RequestBody PatientDTO patientDTO) {
+    public ResponseObject<PatientDTO> registerPatient(@Valid @RequestBody RegisterDTO registerDTO) {
+        PatientDTO patientDTO = PatientDTO.builder()
+                .fullName(registerDTO.getFullName())
+                .email(registerDTO.getEmail())
+                .phoneNumber(registerDTO.getPhoneNumber())
+                .address(registerDTO.getAddress())
+                .dateOfBirth(registerDTO.getDateOfBirth())
+                .gender(registerDTO.getGender())
+                .nationalId(registerDTO.getNationalId())
+                .bloodType(registerDTO.getBloodType())
+                .registrationDate(registerDTO.getRegistrationDate())
+                .isActive(registerDTO.isActive()).build();
+
         PatientDTO result = patientService.registerPatient(patientDTO);
+
+        AuthenDTO authenDTO = AuthenDTO.builder()
+                .subject(registerDTO.getSubject())
+                .password(registerDTO.getPassword()).build();
+
+        authServiceClient.postPatient(authenDTO);
+
         return ResponseObject.<PatientDTO>builder()
                 .status(HttpStatus.CREATED.value())
                 .message("Patient registered successfully")

@@ -1,4 +1,5 @@
-package com.hcmutnightowls.patientservice.configuration;
+package com.hcmutnightowls.testingservice.config;
+
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,9 @@ public class SecurityConfig {
             "/api/auth/staff/login",
             "/api/auth/patient/login",
             "/api/auth/admin/login",
-            "/api/patient",
-            "/api/staff",
-            "/api/admin",
+            "/api/auth/patient/register",
+            "/api/auth/staff/register",
+            "/api/auth/admin/register",
             "/",
             "/swagger-ui/**",
             "/v3/api-docs/**"

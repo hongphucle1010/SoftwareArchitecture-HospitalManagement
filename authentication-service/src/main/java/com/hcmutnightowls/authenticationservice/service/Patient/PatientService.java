@@ -29,6 +29,6 @@ public class PatientService implements IPatientService {
         patient.setSubject(req.getSubject());
         patient.setPassword(passwordEncoder.encode(req.getPassword()));
         patient.setRole("PATIENT");
-        return patientRepo.save(patient);
+        patientRepo.save(patient);
     }
 }
