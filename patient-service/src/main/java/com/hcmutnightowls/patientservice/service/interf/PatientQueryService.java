@@ -1,6 +1,6 @@
 package com.hcmutnightowls.patientservice.service.interf;
 
-import com.hcmutnightowls.patientservice.dto.PatientDTO;
+import com.hcmutnightowls.patientservice.dto.patientDto.PatientDTO;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
 
 import java.util.List;

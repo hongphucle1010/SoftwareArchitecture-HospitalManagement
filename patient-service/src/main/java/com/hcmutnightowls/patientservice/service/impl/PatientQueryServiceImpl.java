@@ -1,6 +1,6 @@
 package com.hcmutnightowls.patientservice.service.impl;
 
-import com.hcmutnightowls.patientservice.dto.PatientDTO;
+import com.hcmutnightowls.patientservice.dto.patientDto.PatientDTO;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
 import com.hcmutnightowls.patientservice.model.Patient;
 import com.hcmutnightowls.patientservice.repository.PatientRepository;
