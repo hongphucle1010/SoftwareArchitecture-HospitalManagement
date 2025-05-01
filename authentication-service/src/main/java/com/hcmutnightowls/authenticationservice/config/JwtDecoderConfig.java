@@ -1,4 +1,4 @@
-package com.hcmutnightowls.authenticationservice.configuration;
+package com.hcmutnightowls.authenticationservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

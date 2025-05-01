@@ -1,4 +1,4 @@
-package com.hcmutnightowls.authenticationservice.configuration;
+package com.hcmutnightowls.testingservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +15,7 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOriginPatterns(List.of("*")); // <-- using setAllowedOriginPatterns instead of setAllowedOrigins// <-- using setAllowedOriginPatterns instead of setAllowedOrigins
-
+        corsConfiguration.setAllowedOriginPatterns(List.of("*"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
 
@@ -25,5 +24,4 @@ public class CorsConfig {
 
         return source;
     }
-
 }
