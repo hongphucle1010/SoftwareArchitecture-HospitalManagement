@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthenDTO {
+    private Long id;
     private String subject;
     private String password;
 }

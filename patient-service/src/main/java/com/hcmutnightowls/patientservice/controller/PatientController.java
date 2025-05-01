@@ -56,6 +56,7 @@ public class PatientController {
         PatientDTO result = patientService.registerPatient(patientDTO);
 
         AuthenDTO authenDTO = AuthenDTO.builder()
+                .id(result.getId())
                 .subject(registerDTO.getSubject())
                 .password(registerDTO.getPassword()).build();
 
