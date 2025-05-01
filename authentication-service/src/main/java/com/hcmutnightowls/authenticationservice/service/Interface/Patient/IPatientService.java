@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface IPatientService {
     public Optional<Patient> findBySubject(String Subject);
-    public Patient postPatient(requestRegister req);
+    public void postPatient(requestRegister req);
 }

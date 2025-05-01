@@ -1,9 +1,9 @@
 package com.hcmutnightowls.patientservice.controller;
 
 
-import com.hcmutnightowls.patientservice.dto.AuthenDTO;
-import com.hcmutnightowls.patientservice.dto.PatientDTO;
-import com.hcmutnightowls.patientservice.dto.RegisterDTO;
+import com.hcmutnightowls.patientservice.dto.patientDto.AuthenDTO;
+import com.hcmutnightowls.patientservice.dto.patientDto.PatientDTO;
+import com.hcmutnightowls.patientservice.dto.patientDto.RegisterDTO;
 import com.hcmutnightowls.patientservice.dto.ResponseObject;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
@@ -56,6 +56,7 @@ public class PatientController {
         PatientDTO result = patientService.registerPatient(patientDTO);
 
         AuthenDTO authenDTO = AuthenDTO.builder()
+                .id(result.getId())
                 .subject(registerDTO.getSubject())
                 .password(registerDTO.getPassword()).build();
 

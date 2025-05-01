@@ -1,6 +1,8 @@
 package com.hcmutnightowls.patientservice.service.impl;
 
-import com.hcmutnightowls.patientservice.dto.InsuranceDTO;
+import com.hcmutnightowls.patientservice.dto.insuranceDto.CreateInsuranceDTO;
+import com.hcmutnightowls.patientservice.dto.insuranceDto.InsuranceDTO;
+import com.hcmutnightowls.patientservice.dto.insuranceDto.UpdateInsuranceDTO;
 import com.hcmutnightowls.patientservice.exception.InsuranceNotFoundException;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
@@ -22,28 +24,53 @@ public class InsuranceServiceImpl implements InsuranceService {
     private final PatientInsuranceRepository insuranceRepository;
 
     @Override
-    public InsuranceDTO addInsurance(Long patientId, InsuranceDTO insuranceDTO)
+    public InsuranceDTO addInsurance(CreateInsuranceDTO createInsuranceDTO)
             throws PatientNotFoundException, InvalidDataException {
+        
+        Long patientId = createInsuranceDTO.getPatientId();
         if (!patientRepository.existsById(patientId)) {
             throw new PatientNotFoundException("Patient not found with ID: " + patientId);
         }
+        
+        // Chuyển đổi CreateInsuranceDTO sang InsuranceDTO để validate
+        InsuranceDTO insuranceDTO = InsuranceDTO.builder()
+                .patientId(patientId)
+                .insuranceProvider(createInsuranceDTO.getInsuranceProvider())
+                .policyNumber(createInsuranceDTO.getPolicyNumber())
+                .validFrom(createInsuranceDTO.getValidFrom())
+                .validUntil(createInsuranceDTO.getValidUntil())
+                .build();
+                
         if (!validateInsurance(insuranceDTO)) {
             throw new InvalidDataException("Invalid insurance data");
         }
-        PatientInsurance insurance = toEntity(insuranceDTO);
+        
+        PatientInsurance insurance = toEntity(createInsuranceDTO);
         insurance.setPatientId(patientId);
         insurance = insuranceRepository.save(insurance);
         return toDTO(insurance);
     }
 
     @Override
-    public InsuranceDTO updateInsurance(Long patientId, Long insuranceId, InsuranceDTO insuranceDTO)
+    public InsuranceDTO updateInsurance(Long id, UpdateInsuranceDTO updateInsuranceDTO)
             throws PatientNotFoundException, InsuranceNotFoundException, InvalidDataException {
+                
+        Long patientId = updateInsuranceDTO.getPatientId();
         if (!patientRepository.existsById(patientId)) {
             throw new PatientNotFoundException("Patient not found with ID: " + patientId);
         }
-        PatientInsurance insurance = insuranceRepository.findByIdAndPatientId(insuranceId, patientId)
-                .orElseThrow(() -> new InsuranceNotFoundException("Insurance not found with ID: " + insuranceId));
+        PatientInsurance insurance = insuranceRepository.findByIdAndPatientId(id, patientId)
+                .orElseThrow(() -> new InsuranceNotFoundException("Insurance not found with ID: " + id));
+        
+        // Chuyển đổi UpdateInsuranceDTO sang InsuranceDTO để validate
+        InsuranceDTO insuranceDTO = InsuranceDTO.builder()
+                .patientId(patientId)
+                .insuranceProvider(updateInsuranceDTO.getInsuranceProvider())
+                .policyNumber(updateInsuranceDTO.getPolicyNumber())
+                .validFrom(updateInsuranceDTO.getValidFrom())
+                .validUntil(updateInsuranceDTO.getValidUntil())
+                .build();
+                
         if (!validateInsurance(insuranceDTO)) {
             throw new InvalidDataException("Invalid insurance data");
         }
@@ -86,6 +113,15 @@ public class InsuranceServiceImpl implements InsuranceService {
             }
         }
         return true;
+    }
+
+    private PatientInsurance toEntity(CreateInsuranceDTO dto) {
+        return PatientInsurance.builder()
+                .insuranceProvider(dto.getInsuranceProvider())
+                .policyNumber(dto.getPolicyNumber())
+                .validFrom(dto.getValidFrom() != null ? LocalDate.parse(dto.getValidFrom()) : null)
+                .validUntil(dto.getValidUntil() != null ? LocalDate.parse(dto.getValidUntil()) : null)
+                .build();
     }
 
     private PatientInsurance toEntity(InsuranceDTO dto) {

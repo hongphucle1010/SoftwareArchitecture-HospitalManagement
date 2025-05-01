@@ -1,5 +1,4 @@
-package com.hcmutnightowls.patientservice.dto;
-
+package com.hcmutnightowls.patientservice.dto.patientDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterDTO {
+public class PatientDTO {
     private Long id;
-    private String subject;
-    private String password;
     private String fullName;
     private String email;
     private String phoneNumber;

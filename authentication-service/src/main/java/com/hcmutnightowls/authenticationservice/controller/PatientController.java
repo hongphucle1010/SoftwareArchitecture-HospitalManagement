@@ -1,7 +1,7 @@
 package com.hcmutnightowls.authenticationservice.controller;
 import com.hcmutnightowls.authenticationservice.dto.request.request;
 import com.hcmutnightowls.authenticationservice.dto.request.requestRegister;
-import com.hcmutnightowls.authenticationservice.dto.respond.APIRespond;
+import com.hcmutnightowls.authenticationservice.dto.response.APIResponse;
 import com.hcmutnightowls.authenticationservice.model.Admin;
 import com.hcmutnightowls.authenticationservice.model.Patient;
 import com.hcmutnightowls.authenticationservice.service.Interface.Patient.IPatientService;
@@ -24,19 +24,18 @@ public class PatientController {
             @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     @PostMapping
-    public Void postPatient(@RequestBody requestRegister req) {
+    public void postPatient(@RequestBody requestRegister req) {
         try {
-            ResponseEntity.ok(APIRespond.<Patient>builder()
+            ResponseEntity.ok(APIResponse.<Void>builder()
                     .status(200)
                     .message("success")
                     .build());
         } catch (Exception e) {
             ResponseEntity.status(401).body(
-                    APIRespond.<Patient>builder()
+                    APIResponse.<Void>builder()
                             .status(401)
                             .message("An error occurred: " + e.getMessage())
                             .build());
         }
-        return null;
     }
 }
