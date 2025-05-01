@@ -1,6 +1,7 @@
 package com.hcmutnightowls.authenticationservice.service.Staff;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
+import com.hcmutnightowls.authenticationservice.dto.request.requestRegister;
 import com.hcmutnightowls.authenticationservice.model.Staff;
 import com.hcmutnightowls.authenticationservice.repository.StaffRepo;
 import com.hcmutnightowls.authenticationservice.service.Interface.Staff.IStaffService;
@@ -23,8 +24,9 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Staff postStaff(request req) {
+    public Staff postStaff(requestRegister req) {
         Staff staff = new Staff();
+        staff.setId(req.getId());
         staff.setSubject(req.getSubject());
         staff.setPassword(passwordEncoder.encode(req.getPassword()));
         staff.setRole("STAFF");

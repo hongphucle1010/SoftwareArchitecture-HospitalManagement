@@ -1,7 +1,9 @@
 package com.hcmutnightowls.authenticationservice.controller;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
-import com.hcmutnightowls.authenticationservice.dto.response.APIResponse;
+import com.hcmutnightowls.authenticationservice.dto.request.requestRegister;
+import com.hcmutnightowls.authenticationservice.dto.respond.APIRespond;
+import com.hcmutnightowls.authenticationservice.model.Admin;
 import com.hcmutnightowls.authenticationservice.model.Staff;
 import com.hcmutnightowls.authenticationservice.service.Interface.Staff.IStaffService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,19 +25,21 @@ public class StaffController {
             @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     @PostMapping
-    public ResponseEntity<APIResponse<Staff>> postStaff(@RequestBody request req) {
+    public Void postStaff(@RequestBody requestRegister req) {
         try {
-            return ResponseEntity.ok(APIResponse.<Staff>builder()
+            ResponseEntity.ok(APIRespond.<Staff>builder()
                     .status(200)
                     .data(istaffService.postStaff(req))
                     .message("success")
                     .build());
         } catch (Exception e) {
-            return ResponseEntity.status(401).body(
-                    APIResponse.<Staff>builder()
+            ResponseEntity.status(401).body(
+                    APIRespond.<Staff>builder()
                             .status(401)
                             .message("An error occurred: " + e.getMessage())
                             .build());
         }
+        return null;
     }
+
 }
