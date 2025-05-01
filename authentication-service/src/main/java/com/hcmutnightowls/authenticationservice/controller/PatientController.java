@@ -26,6 +26,7 @@ public class PatientController {
     @PostMapping
     public void postPatient(@RequestBody requestRegister req) {
         try {
+            iPatientService.postPatient(req);
             ResponseEntity.ok(APIResponse.<Void>builder()
                     .status(200)
                     .message("success")
