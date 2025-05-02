@@ -2,7 +2,7 @@ package com.hcmutnightowls.authenticationservice.controller;
 
 import com.hcmutnightowls.authenticationservice.dto.request.request;
 import com.hcmutnightowls.authenticationservice.dto.request.requestRegister;
-import com.hcmutnightowls.authenticationservice.dto.respond.APIRespond;
+import com.hcmutnightowls.authenticationservice.dto.response.APIResponse;
 import com.hcmutnightowls.authenticationservice.model.Admin;
 import com.hcmutnightowls.authenticationservice.model.Staff;
 import com.hcmutnightowls.authenticationservice.service.Interface.Staff.IStaffService;
@@ -27,14 +27,14 @@ public class StaffController {
     @PostMapping
     public Void postStaff(@RequestBody requestRegister req) {
         try {
-            ResponseEntity.ok(APIRespond.<Staff>builder()
+            ResponseEntity.ok(APIResponse.<Staff>builder()
                     .status(200)
                     .data(istaffService.postStaff(req))
                     .message("success")
                     .build());
         } catch (Exception e) {
             ResponseEntity.status(401).body(
-                    APIRespond.<Staff>builder()
+                    APIResponse.<Staff>builder()
                             .status(401)
                             .message("An error occurred: " + e.getMessage())
                             .build());
