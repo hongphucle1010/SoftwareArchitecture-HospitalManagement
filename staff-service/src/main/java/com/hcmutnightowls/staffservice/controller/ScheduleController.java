@@ -8,6 +8,7 @@ import com.hcmutnightowls.staffservice.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseObject<Schedule> createSchedule(@RequestBody ScheduleRequest scheduleRequest) {
@@ -30,6 +32,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<Schedule> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequest scheduleRequest) {
@@ -40,6 +43,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<Schedule> getScheduleById(@PathVariable Long id) {
@@ -50,6 +54,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Schedule>> getAllSchedules() {
@@ -60,6 +65,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/staff/{staffId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Schedule>> getSchedulesByStaffId(@PathVariable Long staffId) {
@@ -70,6 +76,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/staff/{staffId}/date-range")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Schedule>> getSchedulesByStaffIdAndDateRange(
@@ -83,6 +90,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/department/{department}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Schedule>> getSchedulesByDepartment(@PathVariable String department) {
@@ -93,6 +101,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/shift-type/{shiftType}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Schedule>> getSchedulesByShiftType(@PathVariable ShiftType shiftType) {
@@ -103,6 +112,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/date-range")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Schedule>> getSchedulesByDateRange(
@@ -115,6 +125,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/active")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<List<Schedule>> getActiveSchedules() {
@@ -125,6 +136,7 @@ public class ScheduleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseObject<String> deleteSchedule(@PathVariable Long id) {

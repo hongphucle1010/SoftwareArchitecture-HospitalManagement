@@ -26,13 +26,14 @@ public class PatientController {
     @PostMapping
     public Void postPatient(@RequestBody requestRegister req) {
         try {
-            ResponseEntity.ok(APIResponse.<Patient>builder()
+            iPatientService.postPatient(req);
+            ResponseEntity.ok(APIResponse.<Void>builder()
                     .status(200)
                     .message("success")
                     .build());
         } catch (Exception e) {
             ResponseEntity.status(401).body(
-                    APIResponse.<Patient>builder()
+                    APIResponse.<Void>builder()
                             .status(401)
                             .message("An error occurred: " + e.getMessage())
                             .build());

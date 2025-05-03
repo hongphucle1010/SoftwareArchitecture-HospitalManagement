@@ -1,6 +1,9 @@
 package com.hcmutnightowls.patientservice.service.impl;
 
-import com.hcmutnightowls.patientservice.dto.MedicalHistoryDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.MedicalHistoryDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.CreateMedicalHistoryDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.MedicalHistoryResponseDTO;
+import com.hcmutnightowls.patientservice.dto.medicalHistoryDto.UpdateMedicalHistoryDTO;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.MedicalHistoryNotFoundException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
@@ -22,38 +25,44 @@ public class MedicalHistoryImpl implements MedicalHistoryService {
     private final MedicalHistoryRepository medicalHistoryRepository;
 
     @Override
-    public MedicalHistoryDTO addMedicalHistory(Long patientId, MedicalHistoryDTO medicalHistoryDTO)
+    public MedicalHistoryResponseDTO addMedicalHistory(Long patientId, CreateMedicalHistoryDTO createMedicalHistoryDTO)
             throws PatientNotFoundException, InvalidDataException {
         if (!patientRepository.existsById(patientId)) {
             throw new PatientNotFoundException("Patient not found with ID: " + patientId);
         }
+        
+        MedicalHistoryDTO medicalHistoryDTO = convertToMedicalHistoryDTO(createMedicalHistoryDTO);
         if (!validateMedicalHistory(medicalHistoryDTO)) {
             throw new InvalidDataException("Invalid medical history data");
         }
+        
         MedicalHistory history = toEntity(medicalHistoryDTO);
         history.setPatientId(patientId);
         history = medicalHistoryRepository.save(history);
-        return toDTO(history);
+        return toResponseDTO(history);
     }
 
     @Override
-    public MedicalHistoryDTO updateMedicalHistory(Long patientId, Long historyId, MedicalHistoryDTO medicalHistoryDTO)
+    public MedicalHistoryResponseDTO updateMedicalHistory(Long patientId, Long historyId, UpdateMedicalHistoryDTO updateMedicalHistoryDTO)
             throws PatientNotFoundException, MedicalHistoryNotFoundException, InvalidDataException {
         if (!patientRepository.existsById(patientId)) {
             throw new PatientNotFoundException("Patient not found with ID: " + patientId);
         }
         MedicalHistory history = medicalHistoryRepository.findByIdAndPatientId(historyId, patientId)
                 .orElseThrow(() -> new MedicalHistoryNotFoundException("Medical history not found with ID: " + historyId));
+        
+        MedicalHistoryDTO medicalHistoryDTO = convertToMedicalHistoryDTO(updateMedicalHistoryDTO);
         if (!validateMedicalHistory(medicalHistoryDTO)) {
             throw new InvalidDataException("Invalid medical history data");
         }
+        
         updateEntity(history, medicalHistoryDTO);
         history = medicalHistoryRepository.save(history);
-        return toDTO(history);
+        return toResponseDTO(history);
     }
 
     @Override
-    public List<MedicalHistoryDTO> getMedicalHistories(Long patientId, String startDate, String endDate)
+    public List<MedicalHistoryResponseDTO> getMedicalHistories(Long patientId, String startDate, String endDate)
             throws PatientNotFoundException {
         if (!patientRepository.existsById(patientId)) {
             throw new PatientNotFoundException("Patient not found with ID: " + patientId);
@@ -62,21 +71,21 @@ public class MedicalHistoryImpl implements MedicalHistoryService {
             LocalDate start = LocalDate.parse(startDate);
             LocalDate end = LocalDate.parse(endDate);
             return medicalHistoryRepository.findByPatientIdAndVisitDateBetween(patientId, start, end)
-                    .stream().map(this::toDTO).collect(Collectors.toList());
+                    .stream().map(this::toResponseDTO).collect(Collectors.toList());
         }
         return medicalHistoryRepository.findByPatientId(patientId)
-                .stream().map(this::toDTO).collect(Collectors.toList());
+                .stream().map(this::toResponseDTO).collect(Collectors.toList());
     }
 
     @Override
-    public MedicalHistoryDTO getMedicalHistoryById(Long patientId, Long historyId)
+    public MedicalHistoryResponseDTO getMedicalHistoryById(Long patientId, Long historyId)
             throws PatientNotFoundException, MedicalHistoryNotFoundException {
         if (!patientRepository.existsById(patientId)) {
             throw new PatientNotFoundException("Patient not found with ID: " + patientId);
         }
         MedicalHistory history = medicalHistoryRepository.findByIdAndPatientId(historyId, patientId)
                 .orElseThrow(() -> new MedicalHistoryNotFoundException("Medical history not found with ID: " + historyId));
-        return toDTO(history);
+        return toResponseDTO(history);
     }
 
     @Override
@@ -115,6 +124,20 @@ public class MedicalHistoryImpl implements MedicalHistoryService {
                 .build();
     }
 
+    private MedicalHistoryResponseDTO toResponseDTO(MedicalHistory history) {
+        return MedicalHistoryResponseDTO.builder()
+                .id(history.getId())
+                .patientId(history.getPatientId())
+                .diagnosis(history.getDiagnosis())
+                .treatment(history.getTreatment())
+                .medication(history.getMedication())
+                .allergies(history.getAllergies())
+                .visitDate(history.getVisitDate().toString())
+                .doctorId(history.getDoctorId())
+                .notes(history.getNotes())
+                .build();
+    }
+
     private MedicalHistoryDTO toDTO(MedicalHistory history) {
         return MedicalHistoryDTO.builder()
                 .id(history.getId())
@@ -137,5 +160,31 @@ public class MedicalHistoryImpl implements MedicalHistoryService {
         history.setVisitDate(LocalDate.parse(dto.getVisitDate()));
         history.setDoctorId(dto.getDoctorId());
         history.setNotes(dto.getNotes());
+    }
+    
+    private MedicalHistoryDTO convertToMedicalHistoryDTO(CreateMedicalHistoryDTO dto) {
+        return MedicalHistoryDTO.builder()
+                .patientId(dto.getPatientId())
+                .diagnosis(dto.getDiagnosis())
+                .treatment(dto.getTreatment())
+                .medication(dto.getMedication())
+                .allergies(dto.getAllergies())
+                .visitDate(dto.getVisitDate())
+                .doctorId(dto.getDoctorId())
+                .notes(dto.getNotes())
+                .build();
+    }
+    
+    private MedicalHistoryDTO convertToMedicalHistoryDTO(UpdateMedicalHistoryDTO dto) {
+        return MedicalHistoryDTO.builder()
+                .patientId(dto.getPatientId())
+                .diagnosis(dto.getDiagnosis())
+                .treatment(dto.getTreatment())
+                .medication(dto.getMedication())
+                .allergies(dto.getAllergies())
+                .visitDate(dto.getVisitDate())
+                .doctorId(dto.getDoctorId())
+                .notes(dto.getNotes())
+                .build();
     }
 }

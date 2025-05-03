@@ -24,12 +24,12 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Staff postStaff(requestRegister req) {
+    public void postStaff(requestRegister req) {
         Staff staff = new Staff();
         staff.setId(req.getId());
         staff.setSubject(req.getSubject());
         staff.setPassword(passwordEncoder.encode(req.getPassword()));
         staff.setRole("STAFF");
-        return StaffRepo.save(staff);
+        StaffRepo.save(staff);
     }
 }

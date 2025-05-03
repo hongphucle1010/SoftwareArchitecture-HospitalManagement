@@ -1,15 +1,14 @@
-package com.hcmutnightowls.patientservice.dto;
+package com.hcmutnightowls.staffservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class AuthenDTO {
+@Builder
+public class AuthenClientRequest {
+    private Long id;
     private String subject;
     private String password;
 }

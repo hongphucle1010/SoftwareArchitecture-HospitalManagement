@@ -15,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class StaffRequest {
     private String fullName;
+    private String subject;
+    private String password;
     private String email;
     private String phoneNumber;
     private String address;

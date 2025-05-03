@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface IStaffService {
     public Optional<Staff> findBySubject(String Subject);
-    public Staff postStaff(requestRegister req);
+    public void postStaff(requestRegister req);
 }

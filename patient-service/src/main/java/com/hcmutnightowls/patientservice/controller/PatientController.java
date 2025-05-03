@@ -1,19 +1,22 @@
 package com.hcmutnightowls.patientservice.controller;
 
 
-import com.hcmutnightowls.patientservice.dto.AuthenDTO;
-import com.hcmutnightowls.patientservice.dto.PatientDTO;
-import com.hcmutnightowls.patientservice.dto.RegisterDTO;
+import com.hcmutnightowls.patientservice.configuration.JwtDecoderConfig;
+import com.hcmutnightowls.patientservice.dto.patientDto.AuthenDTO;
+import com.hcmutnightowls.patientservice.dto.patientDto.PatientDTO;
+import com.hcmutnightowls.patientservice.dto.patientDto.RegisterDTO;
 import com.hcmutnightowls.patientservice.dto.ResponseObject;
 import com.hcmutnightowls.patientservice.exception.InvalidDataException;
 import com.hcmutnightowls.patientservice.exception.PatientNotFoundException;
 import com.hcmutnightowls.patientservice.service.interf.AuthServiceClient;
 import com.hcmutnightowls.patientservice.service.interf.PatientQueryService;
 import com.hcmutnightowls.patientservice.service.interf.PatientService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +30,7 @@ public class PatientController {
     private final PatientService patientService;
     private final PatientQueryService patientQueryService;
     private final AuthServiceClient authServiceClient;
+    private final JwtDecoderConfig jwtDecoderConfig;
 //    @GetMapping
 //    @ResponseStatus(HttpStatus.OK)
 //    public ResponseObject<String> test() {
@@ -56,6 +60,7 @@ public class PatientController {
         PatientDTO result = patientService.registerPatient(patientDTO);
 
         AuthenDTO authenDTO = AuthenDTO.builder()
+                .id(result.getId())
                 .subject(registerDTO.getSubject())
                 .password(registerDTO.getPassword()).build();
 
@@ -163,6 +168,24 @@ public class PatientController {
         return ResponseObject.<List<PatientDTO>>builder()
                 .status(HttpStatus.OK.value())
                 .message("Active patients retrieved successfully")
+                .data(result)
+                .build();
+    }
+
+    @GetMapping("/me")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseObject<PatientDTO> getMe(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        String id = "-1";
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7); // Bỏ "Bearer "
+            Jwt jwt = jwtDecoderConfig.jwtDecoder().decode(token);
+            id = jwt.getClaimAsString("jti");
+        }
+        PatientDTO result = patientQueryService.getPatientById(Long.parseLong(id));
+        return ResponseObject.<PatientDTO>builder()
+                .status(HttpStatus.OK.value())
+                .message("Patient retrieved successfully")
                 .data(result)
                 .build();
     }
