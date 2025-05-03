@@ -24,7 +24,7 @@ public class PatientController {
             @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     @PostMapping
-    public void postPatient(@RequestBody requestRegister req) {
+    public Void postPatient(@RequestBody requestRegister req) {
         try {
             iPatientService.postPatient(req);
             ResponseEntity.ok(APIResponse.<Void>builder()
@@ -38,5 +38,6 @@ public class PatientController {
                             .message("An error occurred: " + e.getMessage())
                             .build());
         }
+        return null;
     }
 }

@@ -52,20 +52,20 @@ public class AdminController {
             @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     @PostMapping
-    public Void postAdmin(@RequestBody requestRegister req) {
+    public ResponseEntity<APIResponse<Void>> postAdmin(@RequestBody requestRegister req) {
         try {
-             ResponseEntity.ok(APIResponse.<Admin>builder()
+            iadminService.postAdmin(req);
+             return ResponseEntity.ok(APIResponse.<Void>builder()
                     .status(200)
-                    .data(iadminService.postAdmin(req))
+                    .data(null)
                     .message("success")
                     .build());
         } catch (Exception e) {
-             ResponseEntity.status(401).body(
-                    APIResponse.<Admin>builder()
+             return ResponseEntity.status(401).body(
+                    APIResponse.<Void>builder()
                     .status(401)
                     .message("An error occurred: " + e.getMessage())
                     .build());
         }
-        return null;
     }
 }
