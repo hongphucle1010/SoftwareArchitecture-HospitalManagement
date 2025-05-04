@@ -1,4 +1,4 @@
-package com.hcmutnightowls.staffservice.config;
+package com.hcmutnightowls.staffservice.configuration;
 
 
 import jakarta.servlet.http.HttpServletResponse;

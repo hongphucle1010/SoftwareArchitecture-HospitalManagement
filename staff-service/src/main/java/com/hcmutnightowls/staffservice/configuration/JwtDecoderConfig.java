@@ -1,4 +1,4 @@
-package com.hcmutnightowls.staffservice.config;
+package com.hcmutnightowls.staffservice.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
